@@ -5,9 +5,81 @@ const path = require('path');
 const tronc1 = require('./data_tronc_commun_1_to_15.cjs');
 const tronc2 = require('./data_tronc_commun_16_to_30.cjs');
 const tracks = require('./data_tracks.cjs');
+const enrichments = require('./module_enrichments.cjs');
 const { INSTITUTIONAL_DATA, EXAM_QUESTION_BANK } = require('./data_institutional_and_exam.cjs');
 
 const allModules = [...tronc1, ...tronc2, ...tracks];
+
+// Enrichissement approfondi de chaque module (pratique terrain, guide médecin, alertes et script audio)
+allModules.forEach(mod => {
+  const enr = enrichments[mod.id];
+  if (enr) {
+    const fieldSection = {
+      id: `m${mod.id}-field`,
+      title: `${mod.id <= 30 ? mod.id + '.3' : mod.badge + '.3'} ${enr.fieldGuideTitle}`,
+      audioScript: enr.audioScript,
+      html: `
+        <div class="box-callout box-key">
+          <div class="box-header">🎯 Boîte à Outils de Terrain du Délégué Médical</div>
+          <p>Ce guide synthétise les réflexes cliniques indispensables pour réussir vos entretiens avec les prescripteurs et garantir le bon usage des traitements.</p>
+        </div>
+
+        <div class="def-card" style="border-left-color: var(--yonah-navy);">
+          <div class="def-card-title">🗣️ Questions d'investigation clinique en consultation</div>
+          <p style="font-size:0.92rem; color:var(--text-muted); margin-bottom:0.75rem;">À poser au praticien lors de la phase de découverte pour cerner ses besoins réels :</p>
+          <ul style="margin-left: 1.25rem; line-height: 1.8; font-size: 0.95rem;">
+            ${enr.keyQuestions.map(q => `<li><strong>${q}</strong></li>`).join('')}
+          </ul>
+        </div>
+
+        <div class="case-card" style="margin: 1.25rem 0;">
+          <div class="case-header">
+            <span class="case-badge">Dialogue Médecin / Délégué</span>
+            <h3 class="case-title">Traitement de l'objection fréquente de terrain</h3>
+          </div>
+          <div style="background:var(--yonah-warning-light); border:1px solid var(--yonah-warning); padding:0.9rem; border-radius:var(--radius-sm); margin-bottom:0.75rem;">
+            <strong style="color:var(--yonah-warning);">👨‍⚕️ Objection du praticien :</strong><br>
+            <em>${enr.objection}</em>
+          </div>
+          <div style="background:var(--yonah-emerald-light); border:1px solid var(--yonah-emerald); padding:0.9rem; border-radius:var(--radius-sm);">
+            <strong style="color:var(--yonah-emerald);">🤝 Réponse & Réfutation scientifique du délégué Yonah :</strong><br>
+            <p style="margin-top:0.35rem; line-height:1.6;">${enr.rebuttal}</p>
+          </div>
+        </div>
+
+        <div class="def-card" style="border-left-color: var(--yonah-danger);">
+          <div class="def-card-title">⚠️ Vigilance Thérapeutique & Pharmacovigilance</div>
+          <ul style="margin-left: 1.25rem; line-height: 1.8; font-size: 0.95rem;">
+            ${enr.vigilanceAlerts.map(a => `<li>${a}</li>`).join('')}
+          </ul>
+        </div>
+
+        <div class="box-callout box-tip" style="margin-top: 1.25rem;">
+          <div class="box-header">💊 Conseil & Vigilance Officine</div>
+          <p>${enr.officineTip}</p>
+        </div>
+
+        <div class="def-card" style="border-left-color: var(--yonah-gold); background: var(--yonah-gold-light); margin-top: 1.25rem;">
+          <div class="def-card-title">🎙️ Synthèse Vocale Flash (Script 90 secondes)</div>
+          <p style="font-size:0.95rem; line-height:1.65; color:var(--text-main); font-style:italic;">
+            « ${enr.audioScript} »
+          </p>
+        </div>
+      `
+    };
+
+    const quizIdx = mod.sections.findIndex(s => s.isQuiz || s.isFinalExamSession || s.isExamContract);
+    if (quizIdx !== -1) {
+      mod.sections.splice(quizIdx, 0, fieldSection);
+    } else {
+      mod.sections.push(fieldSection);
+    }
+
+    mod.sections.forEach(s => {
+      if (!s.audioScript) s.audioScript = enr.audioScript;
+    });
+  }
+});
 
 console.log(`Assemblage du parcours complet : ${allModules.length} modules & tracks au total.`);
 
@@ -1167,6 +1239,163 @@ const htmlContent = `<!--
     }
 
     /* =====================================================================
+       LECTEUR AUDIO & SYNTHÈSE VOCALE LOCALE (WEB SPEECH)
+       ===================================================================== */
+    .btn-audio-cta {
+      background: var(--yonah-navy);
+      color: white;
+      border-color: var(--yonah-navy);
+    }
+    .btn-audio-cta:hover {
+      background: var(--yonah-navy-light);
+    }
+
+    .lesson-audio-bar {
+      background: var(--surface);
+      border: 1.5px solid var(--yonah-gold);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      animation: labSlideDown 0.25s ease-out;
+    }
+
+    @keyframes labSlideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lab-main-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .lab-status {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      min-width: 170px;
+    }
+
+    .lab-wave {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 20px;
+      padding: 2px 0;
+    }
+    .lab-wave span {
+      display: block;
+      width: 3.5px;
+      background: var(--yonah-gold);
+      border-radius: 2px;
+      height: 6px;
+      transition: height 0.15s ease;
+    }
+    .lab-wave.speaking span:nth-child(1) { animation: waveAnim 0.7s infinite alternate ease-in-out; }
+    .lab-wave.speaking span:nth-child(2) { animation: waveAnim 0.5s infinite 0.2s alternate ease-in-out; }
+    .lab-wave.speaking span:nth-child(3) { animation: waveAnim 0.8s infinite 0.4s alternate ease-in-out; }
+    .lab-wave.speaking span:nth-child(4) { animation: waveAnim 0.6s infinite 0.1s alternate ease-in-out; }
+
+    @keyframes waveAnim {
+      0% { height: 4px; }
+      100% { height: 18px; }
+    }
+
+    .lab-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .lab-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--yonah-navy);
+    }
+    .lab-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .lab-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .lab-mode-btn {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 0.6rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface-subtle);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lab-mode-btn.active {
+      background: var(--yonah-navy);
+      color: white;
+      border-color: var(--yonah-navy);
+    }
+
+    .lab-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--yonah-navy);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lab-btn:hover {
+      background: var(--surface-subtle);
+    }
+    .lab-btn-play {
+      background: var(--yonah-gold);
+      border-color: var(--yonah-gold-dark);
+      color: var(--yonah-navy-dark);
+      font-weight: 900;
+    }
+    .lab-btn-play:hover {
+      background: #c7943f;
+    }
+
+    .lab-speed-select {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.35rem 0.5rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--yonah-navy);
+      cursor: pointer;
+    }
+
+    .lab-progress-track {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-top: 0.65rem;
+      overflow: hidden;
+    }
+    .lab-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--yonah-navy), var(--yonah-gold));
+      border-radius: 2px;
+      transition: width 0.2s ease;
+    }
+
+    /* =====================================================================
        RÈGLES D'IMPRESSION RIGILITÉ & FILIGRANE SUR TOUTES LES PAGES
        ===================================================================== */
     @page {
@@ -1504,6 +1733,7 @@ const htmlContent = `<!--
         this.flatSections = [];
         this.blurTimeout = null;
 
+        this.initAudioSystem();
         this.initFlatList();
         this.loadStorage();
         this.applyTheme();
@@ -1649,6 +1879,7 @@ const htmlContent = `<!--
 
       showHome() {
         if (this.examInProgress) return;
+        this.audioStop();
         this.currentSectionId = "home";
         this.saveStorage();
         this.closeSidebar();
@@ -1661,6 +1892,7 @@ const htmlContent = `<!--
           alert("Examen en cours ! Terminez ou soumettez l'épreuve avant de naviguer.");
           return;
         }
+        this.audioStop();
         this.currentSectionId = id;
         this.saveStorage();
         this.closeSidebar();
@@ -1813,6 +2045,10 @@ const htmlContent = `<!--
               <span class="lat-badge">\${sec.moduleBadge}</span>
             </div>
             <div class="lat-buttons">
+              <button class="btn-action-touch btn-audio-cta" onclick="app.toggleAudioPlayer()" title="Écouter le cours en synthèse vocale (100% hors-ligne)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                <span>Écouter</span>
+              </button>
               <button class="btn-action-touch btn-print-cta" onclick="window.print()" title="Imprimer cette leçon ou l'enregistrer en PDF avec filigrane protégé">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
                 <span>Imprimer / PDF</span>
@@ -1820,6 +2056,43 @@ const htmlContent = `<!--
               <button class="btn-action-touch \${isRead ? 'read' : ''}" onclick="app.toggleSectionRead('\${sec.id}')">
                 \${isRead ? '✓ Validé (+40 XP)' : 'Marquer comme lu'}
               </button>
+            </div>
+          </div>
+
+          <!-- LECTEUR AUDIO DU COURS -->
+          <div id="lessonAudioBar" class="lesson-audio-bar btn-print-hide" style="display:none;">
+            <div class="lab-main-row">
+              <div class="lab-status">
+                <div class="lab-wave" id="labSoundWave">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="lab-text">
+                  <span class="lab-title" id="labTitleText">Synthèse Vocale YONAH</span>
+                  <span class="lab-sub" id="labStatusText">Prêt pour la lecture</span>
+                </div>
+              </div>
+
+              <div class="lab-controls">
+                <div style="display:flex; gap:0.25rem;">
+                  <button class="lab-mode-btn active" id="labModeExpress" onclick="app.setAudioMode('express')" title="Écouter la synthèse flash de 90 secondes">🎙️ Synthèse Flash</button>
+                  <button class="lab-mode-btn" id="labModeFull" onclick="app.setAudioMode('full')" title="Écouter l'intégralité du cours">📖 Cours complet</button>
+                </div>
+                <button class="lab-btn lab-btn-play" id="labBtnPlay" onclick="app.audioPlayPause()" title="Lecture / Pause">
+                  <svg id="labIconPlay" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+                <button class="lab-btn" onclick="app.audioStop()" title="Arrêter la lecture">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16"/></svg>
+                </button>
+                <select class="lab-speed-select" id="labSpeedSelect" onchange="app.setAudioSpeed(this.value)" title="Vitesse de lecture">
+                  <option value="0.85">0.85x</option>
+                  <option value="1.0" selected>1.0x</option>
+                  <option value="1.2">1.2x</option>
+                </select>
+                <button class="icon-btn" onclick="app.closeAudioBar()" title="Fermer le lecteur" style="width:32px; height:32px; font-weight:800; color:var(--text-muted);">✕</button>
+              </div>
+            </div>
+            <div class="lab-progress-track">
+              <div class="lab-progress-fill" id="labProgressFill" style="width: 0%;"></div>
             </div>
           </div>
 
@@ -2412,6 +2685,207 @@ const htmlContent = `<!--
       closeModalSlot(e) {
         if (!e || e.target.classList.contains("cheat-alert-modal")) {
           document.getElementById("modalSlot").innerHTML = "";
+        }
+      }
+
+      initAudioSystem() {
+        this.audioSupported = 'speechSynthesis' in window;
+        this.audioMode = 'express';
+        this.audioRate = 1.0;
+        this.audioChunks = [];
+        this.audioChunkIdx = 0;
+        this.audioPlaying = false;
+        this.audioPaused = false;
+        this.audioVoices = [];
+
+        if (this.audioSupported) {
+          const loadVoices = () => {
+            try {
+              this.audioVoices = window.speechSynthesis.getVoices();
+            } catch (e) {}
+          };
+          loadVoices();
+          if (window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+          }
+        }
+      }
+
+      toggleAudioPlayer() {
+        const bar = document.getElementById("lessonAudioBar");
+        if (!bar) return;
+        if (bar.style.display === "none" || !bar.style.display) {
+          bar.style.display = "block";
+          this.prepareAudio(false);
+        } else {
+          this.audioStop();
+          bar.style.display = "none";
+        }
+      }
+
+      closeAudioBar() {
+        this.audioStop();
+        const bar = document.getElementById("lessonAudioBar");
+        if (bar) bar.style.display = "none";
+      }
+
+      setAudioMode(mode) {
+        if (this.audioMode === mode) return;
+        this.audioMode = mode;
+        const btnExp = document.getElementById("labModeExpress");
+        const btnFull = document.getElementById("labModeFull");
+        if (btnExp) btnExp.classList.toggle("active", mode === 'express');
+        if (btnFull) btnFull.classList.toggle("active", mode === 'full');
+        this.prepareAudio(this.audioPlaying && !this.audioPaused);
+      }
+
+      setAudioSpeed(rate) {
+        this.audioRate = parseFloat(rate) || 1.0;
+        if (this.audioPlaying && !this.audioPaused) {
+          if (window.speechSynthesis) window.speechSynthesis.cancel();
+          this.speakCurrentChunk();
+        }
+      }
+
+      prepareAudio(autoPlay = false) {
+        if (!this.audioSupported) {
+          const st = document.getElementById("labStatusText");
+          if (st) st.textContent = "Synthèse vocale non disponible sur ce navigateur";
+          return;
+        }
+
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        this.audioPlaying = false;
+        this.audioPaused = false;
+
+        const sec = this.flatSections.find((s) => s.id === this.currentSectionId);
+        if (!sec) return;
+
+        let rawText = "";
+        if (this.audioMode === 'express') {
+          rawText = sec.audioScript || (sec.title + ". " + (sec.keyTakeaways || ""));
+        } else {
+          const tmp = document.createElement("div");
+          tmp.innerHTML = sec.html || "";
+          tmp.querySelectorAll("script, style, button, input, .btn-print-hide").forEach(el => el.remove());
+          rawText = sec.title + ". " + tmp.textContent.replace(/\\s+/g, " ").trim();
+        }
+
+        const sentences = rawText.match(/[^.!?:]+[.!?:]+/g) || [rawText];
+        this.audioChunks = sentences.map(s => s.trim()).filter(s => s.length > 2);
+        this.audioChunkIdx = 0;
+
+        this.updateAudioUIState();
+
+        if (autoPlay && this.audioChunks.length > 0) {
+          this.audioPlayPause();
+        }
+      }
+
+      audioPlayPause() {
+        if (!this.audioSupported) {
+          this.showToast("Synthèse vocale non disponible");
+          return;
+        }
+
+        if (this.audioPlaying && !this.audioPaused) {
+          window.speechSynthesis.pause();
+          this.audioPaused = true;
+          this.updateAudioUIState();
+          return;
+        }
+
+        if (this.audioPaused) {
+          window.speechSynthesis.resume();
+          this.audioPaused = false;
+          this.updateAudioUIState();
+          return;
+        }
+
+        if (this.audioChunks.length === 0) {
+          this.prepareAudio(false);
+        }
+
+        if (this.audioChunks.length > 0) {
+          this.audioPlaying = true;
+          this.audioPaused = false;
+          this.speakCurrentChunk();
+        }
+      }
+
+      speakCurrentChunk() {
+        if (!this.audioPlaying || this.audioPaused) return;
+
+        if (this.audioChunkIdx >= this.audioChunks.length) {
+          this.audioStop();
+          const st = document.getElementById("labStatusText");
+          if (st) st.textContent = "Lecture audio terminée ✓";
+          this.showToast("Synthèse audio terminée avec succès");
+          return;
+        }
+
+        const text = this.audioChunks[this.audioChunkIdx];
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.rate = this.audioRate;
+        utter.lang = "fr-FR";
+
+        if (this.audioVoices && this.audioVoices.length > 0) {
+          const frVoice = this.audioVoices.find(v => v.lang && v.lang.startsWith("fr"));
+          if (frVoice) utter.voice = frVoice;
+        }
+
+        utter.onend = () => {
+          if (!this.audioPlaying || this.audioPaused) return;
+          this.audioChunkIdx++;
+          this.updateAudioUIState();
+          this.speakCurrentChunk();
+        };
+
+        utter.onerror = (e) => {
+          console.warn("Speech error", e);
+          if (!this.audioPlaying || this.audioPaused) return;
+          this.audioChunkIdx++;
+          this.speakCurrentChunk();
+        };
+
+        this.updateAudioUIState();
+        window.speechSynthesis.speak(utter);
+      }
+
+      audioStop() {
+        if (this.audioSupported && window.speechSynthesis) {
+          try { window.speechSynthesis.cancel(); } catch (e) {}
+        }
+        this.audioPlaying = false;
+        this.audioPaused = false;
+        this.audioChunkIdx = 0;
+        this.updateAudioUIState();
+      }
+
+      updateAudioUIState() {
+        const iconPlay = document.getElementById("labIconPlay");
+        const wave = document.getElementById("labSoundWave");
+        const st = document.getElementById("labStatusText");
+        const progFill = document.getElementById("labProgressFill");
+
+        const total = this.audioChunks.length;
+        const current = this.audioChunkIdx;
+        const pct = total > 0 ? Math.round((current / total) * 100) : 0;
+
+        if (progFill) progFill.style.width = pct + "%";
+
+        if (this.audioPlaying && !this.audioPaused) {
+          if (iconPlay) iconPlay.innerHTML = \`<rect x="6" y="4" width="4" height="16" fill="currentColor"/><rect x="14" y="4" width="4" height="16" fill="currentColor"/>\`;
+          if (wave) wave.classList.add("speaking");
+          if (st) st.textContent = \`Lecture : phrase \${current + 1} / \${total} (\${pct}%)\`;
+        } else if (this.audioPaused) {
+          if (iconPlay) iconPlay.innerHTML = \`<polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>\`;
+          if (wave) wave.classList.remove("speaking");
+          if (st) st.textContent = \`En pause (\${pct}%)\`;
+        } else {
+          if (iconPlay) iconPlay.innerHTML = \`<polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>\`;
+          if (wave) wave.classList.remove("speaking");
+          if (st) st.textContent = total > 0 ? \`Prêt (\${total} phrases)\` : "Prêt pour la lecture";
         }
       }
 
