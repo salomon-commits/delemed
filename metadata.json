@@ -1,6 +1,6 @@
 {
-  "name": "Formation Délégué Médical — Guide Interactif & Terrain",
-  "description": "Application de formation interactive et autonome pour nouveaux délégués médicaux : modules complets, quiz certifiants, fiches terrain et plan d'action 30 jours.",
+  "name": "Yonah — Délégué Médical Professionnel (Parcours Certifiant)",
+  "description": "Institut d'Excellence Yonah (Abidjan) : formation certifiante et interactive pour délégués médicaux en Côte d'Ivoire et Afrique de l'Ouest. Modules complets, cas pratiques réels, protocole d'examen surveillé et certificat vérifiable.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

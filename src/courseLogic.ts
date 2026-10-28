@@ -1,5 +1,5 @@
 /**
- * Course logic helpers for the medical representative training app
+ * Yonah Institute Medical Representative Course Logic & Anti-Cheat Utilities
  */
 
 export interface QuizQuestion {
@@ -10,11 +10,11 @@ export interface QuizQuestion {
   explanation: string;
 }
 
-export interface SectionSummary {
-  id: string;
-  moduleId: number;
-  title: string;
-  keywords: string[];
+export interface AntiCheatViolation {
+  type: string;
+  timestamp: number;
+  questionIndex: number;
+  details: string;
 }
 
 export function calculateProgress(readSectionIds: string[], totalSectionsCount: number): number {
@@ -41,53 +41,66 @@ export function calculateQuizScore(
 
   const total = questions.length;
   const percentage = Math.round((score / total) * 100);
-  const passed = percentage >= 75; // 75% passing score standard in medical pharma training
+  const passed = percentage >= 80; // 80% passing standard for Yonah certification
 
   return { score, total, percentage, passed };
 }
 
-export function toggleBookmark(currentBookmarks: string[], sectionId: string): string[] {
-  if (currentBookmarks.includes(sectionId)) {
-    return currentBookmarks.filter((id) => id !== sectionId);
+export function shuffleArray<T>(array: T[], seedRandom = Math.random): T[] {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(seedRandom() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
   }
-  return [...currentBookmarks, sectionId];
+  return result;
 }
 
-export function filterSections<T extends SectionSummary>(sections: T[], query: string): T[] {
-  const trimmed = query.trim().toLowerCase();
-  if (!trimmed) return sections;
+export function calculateXpAndLevel(readCount: number, quizPassedCount: number, examPassed: boolean): {
+  xp: number;
+  level: string;
+  levelIndex: number;
+} {
+  let xp = readCount * 50; // 50 XP per section read
+  xp += quizPassedCount * 150; // 150 XP per passed quiz
+  if (examPassed) xp += 1000; // 1000 XP for final exam
 
-  return sections.filter((s) => {
-    const titleMatch = s.title.toLowerCase().includes(trimmed);
-    const keywordMatch = s.keywords?.some((k) => k.toLowerCase().includes(trimmed));
-    return titleMatch || keywordMatch;
-  });
+  let level = "Débutant";
+  let levelIndex = 1;
+
+  if (xp >= 2500 || examPassed) {
+    level = "Expert Terrain Yonah";
+    levelIndex = 4;
+  } else if (xp >= 1500) {
+    level = "Délégué Confirmé";
+    levelIndex = 3;
+  } else if (xp >= 600) {
+    level = "Intermédiaire";
+    levelIndex = 2;
+  }
+
+  return { xp, level, levelIndex };
 }
 
-export function formatStudyTime(seconds: number): string {
-  const safeSeconds = Math.max(0, Math.floor(seconds));
-  const hrs = Math.floor(safeSeconds / 3600);
-  const mins = Math.floor((safeSeconds % 3600) / 60);
-  const secs = safeSeconds % 60;
-
-  if (hrs > 0) {
-    return `${hrs}h ${mins.toString().padStart(2, '0')}m`;
+export function evaluateViolations(violations: AntiCheatViolation[]): {
+  count: number;
+  isInvalidated: boolean;
+  statusLabel: string;
+} {
+  const count = violations.length;
+  const isInvalidated = count >= 3;
+  let statusLabel = "SANS VIOLATION";
+  if (count === 1) {
+    statusLabel = "VIOLATION MINEURE (1/3)";
+  } else if (count === 2) {
+    statusLabel = "AVERTISSEMENT SÉVÈRE (2/3)";
+  } else if (count >= 3) {
+    statusLabel = "SESSION INVALIDÉE (≥3 VIOLATIONS)";
   }
-  return `${mins}m ${secs.toString().padStart(2, '0')}s`;
+  return { count, isInvalidated, statusLabel };
 }
 
-export function getProgressBadge(percentage: number): { title: string; level: number; color: string } {
-  if (percentage >= 100) {
-    return { title: 'Opérationnel Terrain Certifié', level: 4, color: '#10b981' };
-  }
-  if (percentage >= 70) {
-    return { title: 'Maîtrise Clinique Avancée', level: 3, color: '#3b82f6' };
-  }
-  if (percentage >= 35) {
-    return { title: 'Compétences Fondamentales', level: 2, color: '#f59e0b' };
-  }
-  if (percentage > 0) {
-    return { title: 'Intégration Initiale', level: 1, color: '#6366f1' };
-  }
-  return { title: 'Débutant', level: 0, color: '#64748b' };
+export function formatDuration(seconds: number): string {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
