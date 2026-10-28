@@ -24,10 +24,10 @@ const htmlContent = `<!--
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>Institut Yonah — Délégué Médical d'Élite : Du Débutant à l'Expert</title>
-  <meta name="description" content="Formation certifiante complète de référence pour délégués médicaux et cadres pharmaceutiques : 30 modules fondamentaux et 8 tracks de spécialisation. Institut d'Excellence Yonah (Abidjan).">
-  <meta property="og:title" content="Institut Yonah — Délégué Médical d'Élite">
-  <meta property="og:description" content="Parcours d'élite certifiant de 30 modules et 8 tracks de spécialisation pour devenir Délégué Médical d'Excellence.">
+  <title>Institut d'Excellence YONAH — Délégué Médical : Du Débutant à l'Expert</title>
+  <meta name="description" content="Formation certifiante complète de référence pour délégués médicaux et cadres pharmaceutiques : 30 modules fondamentaux et 8 tracks de spécialisation. Propriété pédagogique de Guede Camus SALOMON.">
+  <meta property="og:title" content="Institut d'Excellence YONAH — Délégué Médical : Du Débutant à l'Expert">
+  <meta property="og:description" content="Parcours d'élite certifiant de 30 modules et 8 tracks de spécialisation. YONAH — Propriété pédagogique de Guede Camus SALOMON.">
   <meta name="theme-color" content="#0B3D5C">
 
   <style>
@@ -802,16 +802,272 @@ const htmlContent = `<!--
       overflow-y: auto;
     }
 
+    /* =====================================================================
+       PROTECTION PÉDAGOGIQUE & FILIGRANE D'IMPRESSION (MULTIPLE PAGES)
+       ===================================================================== */
+    .print-watermark-overlay {
+      display: none;
+    }
+    .print-page-header-fixed {
+      display: none;
+    }
+    .print-page-footer-fixed {
+      display: none;
+    }
+    .lesson-print-header {
+      display: none;
+    }
+    .lesson-print-footer {
+      display: none;
+    }
+
+    /* Barre d'action et d'autorité sur chaque leçon (écran) */
+    .lesson-action-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .lat-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .lat-tier {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--yonah-gold-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .lat-badge {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--yonah-navy);
+      background: var(--surface-subtle);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+    }
+    [data-theme="dark"] .lat-badge {
+      color: var(--yonah-gold);
+    }
+    .lat-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-action-touch {
+      min-height: 40px;
+      padding: 0 0.85rem;
+      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-action-touch:hover {
+      background: var(--surface-subtle);
+      border-color: var(--yonah-gold);
+    }
+    .btn-action-touch.read {
+      background: var(--yonah-emerald-light);
+      color: var(--yonah-emerald);
+      border-color: var(--yonah-emerald);
+    }
+    .btn-action-touch.btn-print-cta {
+      background: var(--yonah-gold-light);
+      color: var(--yonah-gold-dark);
+      border-color: var(--yonah-gold);
+    }
+    [data-theme="dark"] .btn-action-touch.btn-print-cta {
+      background: rgba(212, 162, 76, 0.2);
+      color: var(--yonah-gold);
+    }
+
+    .lesson-auth-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--yonah-gold);
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-md);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--yonah-navy);
+      margin-bottom: 1rem;
+    }
+    [data-theme="dark"] .lesson-auth-pill {
+      color: var(--yonah-gold);
+    }
+    .lesson-auth-pill .auth-sep {
+      opacity: 0.4;
+    }
+
+    .lesson-screen-footer {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed var(--border);
+      text-align: center;
+    }
+    .lsf-copy {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Hero d'accueil optimisé mobile */
+    .home-hero-card {
+      background: linear-gradient(135deg, #0B3D5C 0%, #062335 100%);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.25rem;
+      border: 2px solid var(--yonah-gold);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .home-hero-pill {
+      display: inline-block;
+      background: rgba(212, 162, 76, 0.2);
+      color: var(--yonah-gold);
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+    .home-hero-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+    .home-founder-tag {
+      font-size: 0.92rem;
+      color: var(--yonah-gold);
+      margin-bottom: 0.85rem;
+      font-weight: 600;
+    }
+    .home-founder-tag strong {
+      color: #FFFFFF;
+      font-weight: 800;
+    }
+    .home-hero-desc {
+      font-size: 0.95rem;
+      opacity: 0.92;
+      max-width: 680px;
+      margin: 0 auto 1rem;
+      line-height: 1.6;
+    }
+    .home-pedagogical-notice {
+      display: inline-block;
+      border: 1px dashed var(--yonah-gold);
+      background: rgba(212, 162, 76, 0.12);
+      color: var(--yonah-gold);
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.3px;
+    }
+    .home-name-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      max-width: 480px;
+      margin: 0 auto 1.5rem;
+    }
+    .home-name-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--yonah-gold);
+    }
+    .home-name-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--yonah-gold);
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      background: #FFFFFF;
+      color: #062335;
+      outline: none;
+    }
+    .home-cta-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .home-cta-row .btn-nav-touch {
+      min-height: 48px;
+      font-size: 0.92rem;
+    }
+    .home-btn-main {
+      padding: 0 1.5rem;
+    }
+    .home-btn-sec {
+      background: rgba(212, 162, 76, 0.25);
+      color: var(--yonah-gold);
+      border-color: var(--yonah-gold);
+    }
+    .home-btn-ter {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border-color: var(--yonah-gold);
+    }
+
+    /* RÈGLES MOBILE-FIRST POUR SMARTPHONES */
     @media (max-width: 767px) {
+      .topbar {
+        padding: 0 0.5rem;
+      }
+      .brand-sub {
+        display: none;
+      }
+      .brand-name {
+        font-size: 1.05rem;
+      }
+      .btn-inst-label {
+        display: none;
+      }
+      .icon-btn.btn-institution {
+        padding: 0 0.5rem;
+        min-width: 40px;
+      }
+
       .sidebar {
         position: fixed;
-        top: 60px;
+        top: 0;
         bottom: 0;
         left: 0;
         transform: translateX(-100%);
-        width: 85%;
-        max-width: 320px;
+        width: 88%;
+        max-width: 330px;
         box-shadow: var(--shadow-lg);
+        z-index: 100;
+        height: 100vh;
       }
 
       .sidebar.open {
@@ -821,19 +1077,83 @@ const htmlContent = `<!--
       .sidebar-backdrop {
         position: fixed;
         inset: 0;
-        top: 60px;
-        background: rgba(6, 35, 53, 0.6);
-        z-index: 40;
+        background: rgba(6, 35, 53, 0.65);
+        z-index: 95;
         display: none;
+        backdrop-filter: blur(2px);
       }
 
       .sidebar-backdrop.active {
         display: block;
       }
 
+      .bottombar-sticky {
+        height: 64px;
+        padding: 0 0.6rem env(safe-area-inset-bottom, 0) 0.6rem;
+      }
+      .btn-nav-touch {
+        min-width: 80px;
+        height: 44px;
+        padding: 0 0.65rem;
+        font-size: 0.84rem;
+      }
+      .nav-pos-center {
+        font-size: 0.72rem;
+        max-width: 130px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .home-hero-title {
+        font-size: 1.45rem;
+      }
+      .home-hero-card {
+        padding: 1.5rem 1rem;
+      }
+      .home-cta-row {
+        flex-direction: column;
+      }
+      .home-cta-row .btn-nav-touch {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .lesson-action-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .lat-buttons {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .lat-buttons .btn-action-touch {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .table-science {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .cert-wrap {
+        padding: 1.75rem 1rem;
+        margin: 1rem 0;
+      }
+      .cert-title-huge {
+        font-size: 1.3rem;
+      }
+      .cert-recipient {
+        font-size: 1.45rem;
+        padding: 0 0.5rem 0.25rem;
+      }
       .cert-meta-grid {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 0.75rem;
       }
     }
 
@@ -841,27 +1161,181 @@ const htmlContent = `<!--
       .menu-hamburger-btn {
         display: none;
       }
+      .sidebar-close-btn {
+        display: none !important;
+      }
+    }
+
+    /* =====================================================================
+       RÈGLES D'IMPRESSION RIGILITÉ & FILIGRANE SUR TOUTES LES PAGES
+       ===================================================================== */
+    @page {
+      size: A4 portrait;
+      margin: 18mm 14mm 18mm 14mm;
+      @top-center {
+        content: "YONAH — Propriété pédagogique de Guede Camus SALOMON";
+        font-size: 8pt;
+        font-weight: 700;
+        color: #4A5568;
+        border-bottom: 0.5pt solid #D4A24C;
+        padding-bottom: 3pt;
+      }
+      @bottom-center {
+        content: "« YONAH — Propriété pédagogique de Guede Camus SALOMON » • Contact : +225 0779638812";
+        font-size: 8pt;
+        font-weight: 700;
+        color: #4A5568;
+        border-top: 0.5pt solid #D4A24C;
+        padding-top: 3pt;
+      }
     }
 
     @media print {
       body {
         background: white !important;
         color: black !important;
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
       }
-      .topbar, .sidebar, .bottombar-sticky, .toast, .btn-print-hide, .home-cta-row, .cheat-alert-modal {
+      .topbar, .sidebar, .sidebar-backdrop, .bottombar-sticky, .toast, .btn-print-hide, .home-cta-row, .cheat-alert-modal, #modalSlot {
         display: none !important;
       }
-      #appWrapper, .main-area, .content-scrollable {
+      #appWrapper, .main-area, .content-scrollable, .container-reading {
         display: block !important;
         height: auto !important;
+        max-width: 100% !important;
+        width: 100% !important;
         overflow: visible !important;
         padding: 0 !important;
+        margin: 0 !important;
       }
+
+      /* FILIGRANE RÉPÉTÉ SUR TOUTES LES PAGES PAR POSITION: FIXED */
+      .print-watermark-overlay {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 99999 !important;
+        pointer-events: none !important;
+        overflow: hidden !important;
+        opacity: 0.17 !important;
+        transform: rotate(-30deg) scale(1.15);
+      }
+
+      .print-watermark-row {
+        font-size: 19pt !important;
+        font-weight: 900 !important;
+        color: #0B3D5C !important;
+        text-transform: uppercase !important;
+        letter-spacing: 2px !important;
+        white-space: nowrap !important;
+        text-align: center !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+        margin: 18mm 0 !important;
+      }
+
+      .print-page-header-fixed {
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 15pt !important;
+        font-size: 7.5pt !important;
+        font-weight: 800 !important;
+        color: #0B3D5C !important;
+        border-bottom: 0.75pt solid #D4A24C !important;
+        background: white !important;
+        text-align: center !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        padding-bottom: 2pt !important;
+      }
+
+      .print-page-footer-fixed {
+        display: block !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 15pt !important;
+        font-size: 7.5pt !important;
+        font-weight: 700 !important;
+        color: #4A5568 !important;
+        border-top: 0.75pt solid #D4A24C !important;
+        background: white !important;
+        text-align: center !important;
+        padding-top: 2pt !important;
+      }
+
+      .lesson-print-header {
+        display: block !important;
+        border: 1.5pt solid #0B3D5C !important;
+        border-left: 6pt solid #D4A24C !important;
+        background: #F8F5EE !important;
+        padding: 8pt 12pt !important;
+        margin-bottom: 14pt !important;
+        border-radius: 4pt !important;
+      }
+      .lesson-print-header .lph-inst {
+        font-size: 11pt !important;
+        font-weight: 900 !important;
+        color: #0B3D5C !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+      }
+      .lesson-print-header .lph-prop {
+        font-size: 9pt !important;
+        font-weight: 800 !important;
+        color: #D4A24C !important;
+        margin-top: 2pt !important;
+      }
+      .lesson-print-header .lph-meta {
+        font-size: 8pt !important;
+        color: #4A5568 !important;
+        margin-top: 2pt !important;
+      }
+
+      .lesson-print-footer {
+        display: block !important;
+        border-top: 1pt dashed #0B3D5C !important;
+        margin-top: 20pt !important;
+        padding-top: 8pt !important;
+        text-align: center !important;
+        font-size: 8.5pt !important;
+        font-weight: 800 !important;
+        color: #0B3D5C !important;
+        page-break-inside: avoid !important;
+      }
+
+      .def-card, .box-callout, .case-card, .tool-widget {
+        page-break-inside: avoid !important;
+        border-width: 1pt !important;
+        box-shadow: none !important;
+      }
+
+      .table-science {
+        min-width: 100% !important;
+        page-break-inside: auto !important;
+      }
+      .table-science tr {
+        page-break-inside: avoid !important;
+      }
+
       .cert-wrap {
         border-width: 5px !important;
         box-shadow: none !important;
-        page-break-inside: avoid;
-        margin: 0 auto;
+        page-break-inside: avoid !important;
+        margin: 0 auto !important;
       }
     }
   </style>
@@ -879,9 +1353,14 @@ const htmlContent = `<!--
             <span class="user-level-badge" id="userLevelDisplay">Niveau 1 : Débutant</span>
           </div>
         </div>
-        <button class="icon-btn" onclick="app.promptUserName()" title="Modifier mon profil" style="color: var(--text-muted); width: 32px; height: 32px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </button>
+        <div style="display: flex; align-items: center; gap: 0.25rem;">
+          <button class="icon-btn" onclick="app.promptUserName()" title="Modifier mon profil" style="color: var(--text-muted); width: 36px; height: 36px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </button>
+          <button class="icon-btn sidebar-close-btn" onclick="app.closeSidebar()" title="Fermer le menu" aria-label="Fermer" style="color: var(--yonah-gold); width: 36px; height: 36px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
       </div>
 
       <div class="sidebar-level-filters">
@@ -925,8 +1404,12 @@ const htmlContent = `<!--
         </div>
 
         <div class="topbar-actions">
-          <button class="icon-btn btn-institution" onclick="app.showInstitutionalModal()" title="À propos de Yonah & Comité Scientifique">
-            <span>🏛️ Institut Yonah</span>
+          <button class="icon-btn btn-institution" onclick="app.showInstitutionalModal()" title="À propos de l'Institut YONAH & Fondateur">
+            <span class="btn-inst-icon">🏛️</span>
+            <span class="btn-inst-label">YONAH</span>
+          </button>
+          <button class="icon-btn btn-print-quick" onclick="window.print()" title="Imprimer la page / Télécharger en PDF (avec filigrane)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           </button>
           <button class="icon-btn" onclick="app.toggleTheme()" title="Thème clair / sombre">
             <svg id="themeIconSvg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -960,6 +1443,23 @@ const htmlContent = `<!--
         </button>
       </footer>
     </div>
+  </div>
+
+  <!-- FILIGRANE MULTI-PAGES OFFICIEL POUR TOUTE IMPRESSION (POSITION FIXED DANS MEDIA PRINT) -->
+  <div class="print-watermark-overlay" aria-hidden="true">
+    <div class="print-watermark-row">YONAH — Propriété pédagogique de Guede Camus SALOMON</div>
+    <div class="print-watermark-row">YONAH — Propriété pédagogique de Guede Camus SALOMON</div>
+    <div class="print-watermark-row">YONAH — Propriété pédagogique de Guede Camus SALOMON</div>
+    <div class="print-watermark-row">YONAH — Propriété pédagogique de Guede Camus SALOMON</div>
+    <div class="print-watermark-row">YONAH — Propriété pédagogique de Guede Camus SALOMON</div>
+    <div class="print-watermark-row">YONAH — Propriété pédagogique de Guede Camus SALOMON</div>
+  </div>
+
+  <div class="print-page-header-fixed" aria-hidden="true">
+    YONAH — Propriété pédagogique de Guede Camus SALOMON • Institut d'Excellence YONAH
+  </div>
+  <div class="print-page-footer-fixed" aria-hidden="true">
+    « YONAH — Propriété pédagogique de Guede Camus SALOMON » • Contact : +225 0779638812
   </div>
 
   <div id="toastMessage" style="position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px); background: #0B3D5C; color: white; border: 1px solid #D4A24C; padding: 0.6rem 1.25rem; border-radius: 9999px; font-size: 0.88rem; font-weight: 700; opacity: 0; pointer-events: none; transition: all 0.25s; z-index: 90; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
@@ -1299,18 +1799,56 @@ const htmlContent = `<!--
         const tMeta = TIERS_META[sec.moduleTier] || TIERS_META.DEBUTANT;
 
         let html = \`
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid var(--border); padding-bottom:0.75rem;">
-            <div>
-              <span style="font-size:0.75rem; font-weight:800; color:var(--yonah-gold-dark); text-transform:uppercase; margin-right:0.6rem;">\${tMeta.name}</span>
-              <span style="font-size:0.85rem; font-weight:700; color:var(--yonah-navy);">\${sec.moduleBadge}</span>
-            </div>
-            <button class="btn-nav-touch" onclick="app.toggleSectionRead('\${sec.id}')" style="min-width:auto; height:34px; padding:0 0.75rem; font-size:0.8rem; \${isRead ? 'background:var(--yonah-emerald-light); color:var(--yonah-emerald); border-color:var(--yonah-emerald);' : ''}">
-              \${isRead ? '✓ Validé (+40 XP)' : 'Marquer comme lu'}
-            </button>
+          <!-- EN-TÊTE OFFICIEL POUR IMPRESSION (VISIBLE UNIQUEMENT À L'IMPRESSION) -->
+          <div class="lesson-print-header">
+            <div class="lph-inst">INSTITUT D'EXCELLENCE YONAH</div>
+            <div class="lph-prop">« YONAH — Propriété pédagogique de Guede Camus SALOMON »</div>
+            <div class="lph-meta">Initiateur de l'idée de YONAH • Contact : +225 0779638812 • \${sec.moduleBadge} : \${sec.moduleTitle}</div>
           </div>
+
+          <!-- BARRE D'ACTIONS ÉCRAN AVEC COMMANDE D'IMPRESSION RAPIDE -->
+          <div class="lesson-action-topbar btn-print-hide">
+            <div class="lat-info">
+              <span class="lat-tier">\${tMeta.name}</span>
+              <span class="lat-badge">\${sec.moduleBadge}</span>
+            </div>
+            <div class="lat-buttons">
+              <button class="btn-action-touch btn-print-cta" onclick="window.print()" title="Imprimer cette leçon ou l'enregistrer en PDF avec filigrane protégé">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                <span>Imprimer / PDF</span>
+              </button>
+              <button class="btn-action-touch \${isRead ? 'read' : ''}" onclick="app.toggleSectionRead('\${sec.id}')">
+                \${isRead ? '✓ Validé (+40 XP)' : 'Marquer comme lu'}
+              </button>
+            </div>
+          </div>
+
+          <!-- BANNIÈRE DE PROPRIÉTÉ PÉDAGOGIQUE -->
+          <div class="lesson-auth-pill btn-print-hide">
+            <span>« YONAH — Propriété pédagogique de Guede Camus SALOMON »</span>
+            <span class="auth-sep">•</span>
+            <span>Initiateur de l'idée de YONAH</span>
+            <span class="auth-sep">•</span>
+            <span>+225 0779638812</span>
+          </div>
+
           <h1 style="font-size:1.6rem; font-weight:900; color:var(--text-main); margin-bottom:1.25rem; line-height:1.25;">\${sec.title}</h1>
-          <div style="font-size:1.02rem; line-height:1.75; color:var(--text-main);">
+          <div class="lesson-body-content" style="font-size:1.02rem; line-height:1.75; color:var(--text-main);">
             \${sec.html || ''}
+          </div>
+
+          <!-- PIED DE PAGE D'IMPRESSION DU SUPPORT -->
+          <div class="lesson-print-footer">
+            « YONAH — Propriété pédagogique de Guede Camus SALOMON » • Contact : +225 0779638812 • Institut d'Excellence YONAH
+          </div>
+
+          <!-- PIED DE PAGE ÉCRAN DE LA LEÇON -->
+          <div class="lesson-screen-footer btn-print-hide">
+            <div class="lsf-copy">Support officiel de formation • YONAH — Propriété pédagogique de Guede Camus SALOMON (+225 0779638812)</div>
+            <button class="btn-nav-touch" onclick="window.print()" style="font-size:0.86rem; height:42px; margin:0.4rem auto 0; display:inline-flex;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span>Imprimer cette leçon en PDF (avec filigrane)</span>
+            </button>
           </div>
         \`;
 
@@ -1333,31 +1871,39 @@ const htmlContent = `<!--
         const pct = this.calculateProgress();
 
         mount.innerHTML = \`
-          <div style="background:linear-gradient(135deg, #0B3D5C 0%, #062335 100%); color:white; border-radius:var(--radius-lg); padding:2rem 1.5rem; border:2px solid var(--yonah-gold); box-shadow:var(--shadow-lg); margin-bottom:2rem; text-align:center;">
-            <div style="display:inline-block; background:rgba(212,162,76,0.2); color:var(--yonah-gold); padding:0.3rem 0.85rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:800; margin-bottom:1rem; letter-spacing:0.5px;">
-              INSTITUT D'EXCELLENCE YONAH • PARCOURS CERTIFIANT D'ÉLITE
+          <div class="home-hero-card">
+            <div class="home-hero-pill">
+              INSTITUT D'EXCELLENCE YONAH • PARCOURS DE RÉFÉRENCE
             </div>
-            <h1 style="font-size:1.9rem; font-weight:900; line-height:1.2; margin-bottom:0.75rem;">
-              Devenir Délégué Médical : Du Débutant à l'Expert
+            <h1 class="home-hero-title">
+              Délégué Médical : Du Débutant à l'Expert
             </h1>
-            <p style="font-size:1rem; opacity:0.92; max-width:680px; margin:0 auto 1.5rem; line-height:1.6;">
-              Architecture d'excellence en deux étages : <strong>30 modules fondamentaux</strong> en 4 niveaux et <strong>8 tracks de spécialisation</strong> de pointe. Plus de 200 fiches bilingues, cas réels ouest-africains et protocole d'examen surveillé.
-            </p>
-            <div style="background:rgba(255,255,255,0.1); border-radius:var(--radius-md); padding:1rem; max-width:480px; margin:0 auto 1.5rem;">
-              <label style="display:block; font-size:0.85rem; font-weight:700; margin-bottom:0.5rem; color:var(--yonah-gold);">
-                Nom & Prénom de l'apprenant (Certificat officiel Yonah) :
-              </label>
-              <input type="text" id="homeNameInput" value="\${this.userName}" placeholder="ex : DR. KOUASSI Jean-Yves" style="width:100%; padding:0.6rem; border-radius:var(--radius-sm); border:1px solid var(--yonah-gold); text-align:center; font-weight:700;" onchange="app.saveHomeName(this.value)">
+            <div class="home-founder-tag">
+              Initiateur de l'idée de YONAH : <strong>Guede Camus SALOMON</strong> • Contact : <strong>+225 0779638812</strong>
             </div>
-            <div class="home-cta-row" style="display:flex; justify-content:center; gap:0.75rem; flex-wrap:wrap;">
-              <button class="btn-nav-touch primary" onclick="app.navigateOffset(1)" style="padding:0 1.5rem; height:48px; font-size:1rem;">
+            <p class="home-hero-desc">
+              Programme certifiant complet : <strong>30 modules fondamentaux</strong> et <strong>8 tracks de spécialisation</strong>. Pharmacologie fondamentale, physiologie, classification ATC, CIM-11, interactions médicamenteuses, visite médicale de terrain et protocole d'examen surveillé.
+            </p>
+            <div class="home-pedagogical-notice">
+              « YONAH — Propriété pédagogique de Guede Camus SALOMON »
+            </div>
+
+            <div class="home-name-box">
+              <label class="home-name-label">
+                Nom & Prénom de l'apprenant (Certificat de reconnaissance YONAH) :
+              </label>
+              <input type="text" id="homeNameInput" value="\${this.userName}" placeholder="ex : KOUASSI Yao Emmanuel" class="home-name-input" onchange="app.saveHomeName(this.value)">
+            </div>
+
+            <div class="home-cta-row">
+              <button class="btn-nav-touch primary home-btn-main" onclick="app.navigateOffset(1)">
                 \${pct > 0 ? "Reprendre ma formation (" + pct + "%)" : "Commencer le Module 1"}
               </button>
-              <button class="btn-nav-touch" onclick="app.showInstitutionalModal()" style="background:rgba(212,162,76,0.25); color:var(--yonah-gold); border-color:var(--yonah-gold); height:48px;">
-                Comité Scientifique & CHU
+              <button class="btn-nav-touch home-btn-sec" onclick="app.showInstitutionalModal()">
+                🏛️ L'Initiative YONAH
               </button>
-              <button class="btn-nav-touch" onclick="app.goToSection('m30-integrity')" style="background:rgba(255,255,255,0.15); color:white; border-color:var(--yonah-gold); height:48px;">
-                Examen Certifiant & Diplôme
+              <button class="btn-nav-touch home-btn-ter" onclick="app.goToSection('m30-integrity')">
+                🎓 Examen & Certificat
               </button>
             </div>
           </div>
@@ -1412,11 +1958,11 @@ const htmlContent = `<!--
           <textarea id="caseInput-\${sec.caseId}" class="case-textarea" placeholder="Rédigez ici ce que vous dites et faites concrètement...">\${savedAns}</textarea>
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
             <button class="btn-nav-touch" onclick="app.saveCaseAnswer('\${sec.caseId}')">Enregistrer ma réponse</button>
-            <button class="btn-nav-touch primary" onclick="app.revealCaseExpert('\${sec.caseId}')">Voir la réponse experte Yonah</button>
+            <button class="btn-nav-touch primary" onclick="app.revealCaseExpert('\${sec.caseId}')">Voir la réponse modèle YONAH</button>
           </div>
           <div id="caseRevealBox-\${sec.caseId}" style="display:\${savedAns ? 'block' : 'none'};">
             <div class="case-expert-reveal">
-              <strong style="color:var(--yonah-emerald); display:block; margin-bottom:0.4rem;">✓ Réponse Modèle du Comité Scientifique Yonah :</strong>
+              <strong style="color:var(--yonah-emerald); display:block; margin-bottom:0.4rem;">✓ Réponse Modèle Pédagogique YONAH :</strong>
               <p style="font-size:0.95rem; line-height:1.6;">\${sec.expertAnswer}</p>
               <div class="box-callout box-key" style="margin-top:0.8rem; margin-bottom:0;">
                 <div class="box-header">Points clés à retenir</div>
@@ -1595,7 +2141,7 @@ const htmlContent = `<!--
         mount.innerHTML = \`
           <div style="background:var(--yonah-navy); color:white; border-radius:var(--radius-lg); padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; position:sticky; top:70px; z-index:30; box-shadow:var(--shadow-md); margin-bottom:1.5rem;">
             <div>
-              <span style="font-size:0.8rem; font-weight:800; color:var(--yonah-gold); text-transform:uppercase;">EXAMEN NATIONAL CERTIFIANT</span><br>
+              <span style="font-size:0.8rem; font-weight:800; color:var(--yonah-gold); text-transform:uppercase;">EXAMEN CERTIFIANT YONAH</span><br>
               <strong style="font-size:1.1rem;">\${this.userName}</strong>
             </div>
             <div style="display:flex; align-items:center; gap:1.5rem;">
@@ -1734,12 +2280,12 @@ const htmlContent = `<!--
               <path d="M50 38 L50 78" stroke="#D4A24C" stroke-width="4" stroke-linecap="round"/>
               <path d="M50 48 C62 44, 62 58, 50 60 C38 62, 38 72, 50 74" stroke="#0E7C66" stroke-width="3.5" fill="none" stroke-linecap="round"/>
             </svg>
-            <div class="cert-title-huge">CERTIFICAT D'EXCELLENCE PROFESSIONNELLE</div>
-            <div class="cert-sub-text">INSTITUT D'EXCELLENCE YONAH • PARCOURS CERTIFIANT D'ÉLITE</div>
-            <p style="font-size:0.95rem; text-transform:uppercase; letter-spacing:1px; color:#4A5568;">Il est officiellement certifié que</p>
+            <div class="cert-title-huge">CERTIFICAT DE RECONNAISSANCE INTERNE</div>
+            <div class="cert-sub-text">INSTITUT D'EXCELLENCE YONAH • PARCOURS DE FORMATION D'ÉLITE</div>
+            <p style="font-size:0.95rem; text-transform:uppercase; letter-spacing:1px; color:#4A5568;">Il est certifié que</p>
             <div class="cert-recipient">\${this.userName || "Apprenant Certifié"}</div>
             <p class="cert-statement">
-              a satisfait avec distinction aux exigences théoriques, scientifiques et pratiques de l'ensemble des <strong>30 modules</strong> et des <strong>tracks de spécialisation</strong> du programme officiel <strong>« Délégué Médical : Du Débutant à l'Expert »</strong>, sous protocole de surveillance anti-triche renforcé, attestant de ses compétences de haut niveau pour exercer, conseiller et diriger auprès des professionnels de santé et des institutions sanitaires.
+              a suivi avec assiduité et validé l'intégralité du cursus pédagogique d'excellence <strong>« Délégué Médical : Du Débutant à l'Expert »</strong> comprenant les <strong>30 modules fondamentaux</strong> et les <strong>tracks de spécialisation</strong>, et a satisfait avec succès à l'examen final d'évaluation sous protocole de surveillance anti-triche, attestant de ses compétences de haut niveau pour exercer avec rigueur, science et éthique.
             </p>
             <div class="cert-meta-grid">
               <div>
@@ -1756,7 +2302,12 @@ const htmlContent = `<!--
               </div>
             </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2rem; padding-top:1.5rem; border-top:1px dashed #CBD5E0;">
+            <div style="font-size:0.78rem; color:#718096; text-align:center; margin-top:1.5rem; line-height:1.45; border-top:1px solid #E2DBD0; padding-top:0.75rem;">
+              Certificat de reconnaissance interne délivré par l'Institut d'Excellence YONAH.<br>
+              Propriété pédagogique de Guede Camus SALOMON • Vérifiable via identifiant cryptographique unique.
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; padding-top:1rem; border-top:1px dashed #CBD5E0; flex-wrap:wrap; gap:1rem;">
               <div style="text-align:left;">
                 <svg width="68" height="68" viewBox="0 0 25 25" style="border:1px solid #D4A24C; padding:2px; background:white;">
                   <rect width="25" height="25" fill="white"/>
@@ -1769,15 +2320,19 @@ const htmlContent = `<!--
                   <path d="M10 35 Q 40 5, 70 30 T 130 20" stroke="#0B3D5C" stroke-width="2.5" fill="none"/>
                   <path d="M30 40 Q 60 15, 90 35" stroke="#D4A24C" stroke-width="1.8" fill="none"/>
                 </svg>
-                <span style="font-size:0.75rem; font-weight:800; color:#062335;">Pr. A. Konan</span>
-                <span style="font-size:0.68rem; color:#718096;">Président du Conseil Scientifique Yonah</span>
+                <span style="font-size:0.88rem; font-weight:900; color:#062335;">Guede Camus SALOMON</span>
+                <span style="font-size:0.75rem; color:#4A5568; font-weight:700;">Initiateur de l'idée de YONAH</span>
+                <span style="font-size:0.7rem; color:#718096;">Tél : +225 0779638812</span>
               </div>
             </div>
           </div>
 
-          <div class="btn-print-hide" style="text-align:center; margin:1.5rem 0 3rem;">
-            <button class="btn-nav-touch primary" onclick="window.print()" style="height:50px; font-size:1rem; padding:0 2rem;">
-              Imprimer / Exporter mon Certificat (PDF)
+          <div class="btn-print-hide" style="text-align:center; margin:1.5rem 0 3rem; display:flex; justify-content:center; gap:0.75rem; flex-wrap:wrap;">
+            <button class="btn-nav-touch primary" onclick="window.print()" style="min-height:50px; font-size:1rem; padding:0 2rem;">
+              🖨️ Imprimer / Télécharger mon Certificat (PDF avec filigrane)
+            </button>
+            <button class="btn-nav-touch" onclick="app.showVerifyModal()" style="min-height:50px; font-size:1rem; padding:0 1.5rem;">
+              🔍 Vérifier l'authenticité
             </button>
           </div>
         \`;
@@ -1815,14 +2370,15 @@ const htmlContent = `<!--
               <strong>✓ CERTIFICAT OFFICIEL AUTHENTIQUE</strong><br>
               Titulaire : <strong>\${this.userName}</strong><br>
               Date : \${this.examResult.date}<br>
-              Parcours : 30 Modules & Spécialisations • Score : \${this.examResult.score}/\${this.examResult.total} (\${this.examResult.pct}%)
+              Parcours : 30 Modules & Spécialisations • Score : \${this.examResult.score}/\${this.examResult.total} (\${this.examResult.pct}%)<br>
+              <em>Certificat de reconnaissance interne — Institut d'Excellence YONAH</em>
             </div>
           \`;
         } else {
           resSlot.innerHTML = \`
             <div style="background:var(--yonah-danger-light); border:1px solid var(--yonah-danger); padding:0.85rem; border-radius:var(--radius-sm); color:#7f1d1d;">
               <strong>✗ CERTIFICAT INTROUVABLE DANS LA BASE LOCALE</strong><br>
-              Vérifiez la saisie exacte du code.
+              Vérifiez la saisie exacte du code (format YONAH-DM-2025-XXXXXX).
             </div>
           \`;
         }
@@ -1838,41 +2394,40 @@ const htmlContent = `<!--
           <div class="cheat-alert-modal" onclick="app.closeModalSlot(event)">
             <div class="cheat-alert-card" onclick="event.stopPropagation()">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:2px solid var(--yonah-gold); padding-bottom:0.5rem;">
-                <h2 style="font-size:1.35rem; font-weight:900; color:var(--yonah-navy);">\${info.about.title}</h2>
-                <button class="icon-btn" onclick="app.closeModalSlot()" style="width:32px; height:32px;">✕</button>
+                <h2 style="font-size:1.35rem; font-weight:900; color:var(--yonah-navy);">\${info.about.institution}</h2>
+                <button class="icon-btn" onclick="app.closeModalSlot()" style="width:36px; height:36px; font-size:1.2rem; font-weight:900;">✕</button>
               </div>
 
-              <div style="font-size:0.92rem; line-height:1.6; color:var(--text-main); margin-bottom:1.5rem;">
-                <p><strong>Siège académique :</strong> \${info.about.location}</p>
-                <p style="margin-top:0.4rem;">\${info.about.mission}</p>
+              <!-- IDENTITÉ OFFICIELLE DU FONDATEUR -->
+              <div style="background:var(--surface-subtle); border-radius:var(--radius-md); padding:1.25rem; border-left:4px solid var(--yonah-gold); margin-bottom:1.25rem;">
+                <div style="font-size:0.75rem; font-weight:800; color:var(--yonah-gold-dark); text-transform:uppercase; letter-spacing:0.5px;">Fondateur & Propriété Pédagogique</div>
+                <div style="font-size:1.35rem; font-weight:900; color:var(--yonah-navy); margin:0.3rem 0;">\${info.about.founder}</div>
+                <div style="font-size:0.95rem; font-weight:700; color:var(--text-main); margin-bottom:0.5rem;">\${info.about.role}</div>
+                <div style="display:inline-flex; align-items:center; gap:0.4rem; background:rgba(11,61,92,0.1); padding:0.35rem 0.8rem; border-radius:var(--radius-full); font-weight:800; font-size:0.9rem; color:var(--yonah-navy);">
+                  📞 Contact direct : \${info.about.contact}
+                </div>
               </div>
 
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.5rem;">
-                \${info.about.stats.map(s => \`
-                  <div style="background:var(--surface-subtle); border-radius:var(--radius-md); padding:0.75rem; border-left:3px solid var(--yonah-gold);">
-                    <div style="font-size:1.3rem; font-weight:900; color:var(--yonah-navy);">\${s.value}</div>
-                    <div style="font-size:0.78rem; color:var(--text-muted); font-weight:600;">\${s.label}</div>
-                  </div>
-                \`).join('')}
+              <div style="font-size:0.92rem; line-height:1.6; color:var(--text-main); margin-bottom:1.25rem;">
+                <p><strong>Mission de formation :</strong> \${info.about.mission}</p>
+                <p style="margin-top:0.4rem; font-size:0.86rem; font-weight:700; color:var(--yonah-gold-dark);">\${info.about.ownership}</p>
               </div>
 
+              <!-- STATUT OFFICIEL DU CERTIFICAT -->
               <div class="box-callout box-key" style="margin:1rem 0;">
-                <div class="box-header">Immersion Clinique Hospitalière de 4 Semaines</div>
-                <p style="font-size:0.88rem;">\${info.about.immersion}</p>
+                <div class="box-header" style="color:var(--yonah-navy);">Statut Officiel du Certificat YONAH</div>
+                <p style="font-size:0.9rem; line-height:1.6; margin-bottom:0.75rem;">
+                  <strong>Certificat de Reconnaissance Interne :</strong> \${info.about.certificateNotice.summary}
+                </p>
+                <div style="font-weight:800; font-size:0.82rem; color:var(--yonah-gold-dark); margin-bottom:0.4rem; text-transform:uppercase;">Piliers d'Excellence & Valeur :</div>
+                <ul style="margin-left:1.25rem; font-size:0.86rem; line-height:1.6;">
+                  \${info.about.certificateNotice.credibilityPoints.map(p => \`<li>\${p}</li>\`).join('')}
+                </ul>
               </div>
 
-              <h3 style="font-size:1.15rem; font-weight:800; color:var(--yonah-navy); margin:1.25rem 0 0.75rem;">Membres Éminents du Conseil Scientifique</h3>
-              <div style="display:flex; flex-direction:column; gap:0.75rem; margin-bottom:1.5rem;">
-                \${info.committee.map(c => \`
-                  <div style="background:var(--surface-subtle); border-radius:var(--radius-md); padding:0.8rem;">
-                    <div style="font-weight:800; font-size:0.95rem; color:var(--yonah-navy);">\${c.name} — <span style="color:var(--yonah-gold-dark); font-weight:700;">\${c.title}</span></div>
-                    <div style="font-size:0.82rem; font-weight:600; color:var(--text-muted);">\${c.role}</div>
-                    <div style="font-size:0.8rem; margin-top:0.25rem; font-style:italic;">\${c.bio}</div>
-                  </div>
-                \`).join('')}
+              <div style="display:flex; gap:0.5rem; margin-top:1.25rem;">
+                <button class="btn-nav-touch primary" style="flex:1;" onclick="app.closeModalSlot()">Fermer</button>
               </div>
-
-              <button class="btn-nav-touch primary" style="width:100%;" onclick="app.closeModalSlot()">Fermer</button>
             </div>
           </div>
         \`;

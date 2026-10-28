@@ -2,52 +2,26 @@
 
 const INSTITUTIONAL_DATA = {
   about: {
-    title: "À propos de l'Institut d'Excellence Yonah",
-    location: "Abidjan, Côte d'Ivoire (Plateau & Cocody)",
-    mission: "Former l'élite des délégués médicaux, responsables grands comptes et cadres pharmaceutiques d'Afrique subsaharienne par une alliance unique entre rigueur scientifique médicale internationale, excellence éthique et immersion clinique réelle.",
-    stats: [
-      { label: "Taux d'insertion professionnelle sous 6 mois", value: "96.4%" },
-      { label: "Modules certifiants & Spécialisations", value: "30 Modules + 8 Tracks" },
-      { label: "Durée d'immersion clinique hospitalière", value: "4 semaines en CHU" },
-      { label: "Laboratoires & Grossistes partenaires", value: "45+ Entreprises" }
-    ],
-    immersion: "Chaque lauréat Yonah effectue un stage clinique d'immersion hospitalière obligatoire de 4 semaines au sein des services de cardiologie, pédiatrie, réanimation et pharmacie hospitalière (CHU de Cocody, Treichville, Yopougon ou Bouaké) pour comprendre intimement le quotidien des soignants et la détresse des malades.",
-    ethics: "Tolérance zéro contre la corruption. Les diplômés Yonah s'engagent par serment à promouvoir le Bon Usage du Médicament, à respecter le secret médical et à ne jamais monnayer d'actes de prescription.",
-    accreditation: "Certificats professionnels vérifiables par empreinte cryptographique SHA-256 unique et registre numérique public décentralisé."
-  },
-
-  committee: [
-    {
-      name: "Pr. Augustin KONAN",
-      title: "Président du Conseil Scientifique",
-      role: "Professeur Titulaire de Pharmacologie Clinique, Faculté de Pharmacie d'Abidjan",
-      bio: "Ancien doyen, expert international en pharmacocinétique et membre des comités d'experts de l'OMS."
-    },
-    {
-      name: "Dr. Marie-Hélène BROU",
-      title: "Vice-Présidente aux Affaires Pédagogiques",
-      role: "Praticienne Hospitalière, Chef de Service de Cardiologie CHU de Treichville",
-      bio: "Spécialiste de l'hypertension artérielle du sujet mélanoderme et des pathologies vasculaires en Afrique."
-    },
-    {
-      name: "Dr. Yves-Alain DIOMANDÉ",
-      title: "Directeur de la Déontologie & Régulation",
-      role: "Pharmacien Inspecteur, Ancien Directeur de la Régulation Pharmaceutique (AIRP)",
-      bio: "Expert des dossiers d'homologation CTD, de la pharmacovigilance et des inspections BPF/BPD."
-    },
-    {
-      name: "Dr. Fatoumata BENGALY",
-      title: "Directrice du Pôle Infectiologie & Santé Publique",
-      role: "Infectiologue et Épidémiologiste, Consultante auprès du Fonds Mondial",
-      bio: "Spécialiste des stratégies de déploiement des CTA antipaludiques et de l'antibiogouvernance hospitalière."
-    },
-    {
-      name: "M. Christian AKLÉ",
-      title: "Directeur de l'Insertion Professionnelle & Partenariats",
-      role: "Ancien Directeur Général de Laboratoire Multinational pour l'Afrique de l'Ouest",
-      bio: "Plus de 25 ans de direction commerciale, spécialiste du management des forces de vente et des relations avec les grossistes répartiteurs."
+    title: "Institut d'Excellence YONAH",
+    founder: "Guede Camus SALOMON",
+    role: "Initiateur de l'idée de YONAH",
+    contact: "+225 0779638812",
+    institution: "Institut d'Excellence YONAH",
+    mission: "Offrir un parcours pédagogique de référence complet et rigoureux pour la formation de délégués médicaux et cadres pharmaceutiques : 30 modules fondamentaux et 8 tracks de spécialisation de haut niveau.",
+    ownership: "YONAH — Propriété pédagogique de Guede Camus SALOMON. Tous droits réservés.",
+    certificateNotice: {
+      type: "Certificat de Reconnaissance Interne",
+      issuer: "Institut d'Excellence YONAH",
+      summary: "Le certificat délivré par l'Institut d'Excellence YONAH est un certificat de reconnaissance interne attestant que l'apprenant a suivi l'intégralité du parcours et réussi l'examen final surveillé (minimum 80%). Il ne s'agit pas d'un diplôme d'État ni d'une accréditation ministérielle externe.",
+      credibilityPoints: [
+        "Qualité scientifique et pédagogique indiscutable des contenus validés en interne",
+        "Rigueur du cursus de 30 modules fondamentaux et 8 tracks de spécialisation",
+        "Examen final exigeant (80% minimum requis avec protocole d'intégrité anti-triche)",
+        "Vérifiabilité directe du certificat par identifiant cryptographique unique et registre local",
+        "Réputation construite par l'excellence opérationnelle des diplômés sur le terrain"
+      ]
     }
-  ]
+  }
 };
 
 const EXAM_QUESTION_BANK = [

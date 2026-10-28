@@ -626,17 +626,24 @@ module.exports = [
         isExamContract: true,
         html: `
           <div class="box-callout box-key">
-            <div class="box-header">Protocole officiel de surveillance anti-triche — Institut Yonah</div>
-            <p>Cet examen final valide l'obtention du <strong>Certificat Professionnel d'Excellence Yonah</strong> attestant de la maîtrise des 30 modules du cursus fondamental. Pour garantir sa valeur indiscutable auprès des directions des affaires médicales, directeurs des ressources humaines et recruteurs internationaux, l'épreuve est soumise aux règles de surveillance d'intégrité suivantes :</p>
+            <div class="box-header">Protocole officiel de surveillance anti-triche — Institut d'Excellence YONAH</div>
+            <p>Cet examen final valide l'obtention du <strong>Certificat de Reconnaissance Interne délivré par l'Institut d'Excellence YONAH</strong>, initiative fondée par <strong>Guede Camus SALOMON</strong>. Pour garantir sa valeur indiscutable et sanctionner une réelle maîtrise opérationnelle, l'épreuve est soumise aux règles d'intégrité suivantes :</p>
+          </div>
+
+          <div class="def-card" style="border-left-color: var(--yonah-navy); margin: 1rem 0;">
+            <div class="def-card-title">📌 Statut officiel du Certificat YONAH</div>
+            <div class="def-row">
+              Ce certificat est un <strong>certificat de reconnaissance interne</strong> délivré par l'Institut d'Excellence YONAH. Il atteste que l'apprenant a suivi avec assiduité l'intégralité du cursus (30 modules fondamentaux et tracks de spécialisation) et validé l'examen final à plus de 80%. Il ne s'agit pas d'un diplôme d'État ni d'une accréditation ministérielle externe. Sa valeur repose sur la qualité scientifique validée en interne, l'exigence de son évaluation et la réputation d'excellence de ses diplômés.
+            </div>
           </div>
 
           <ol style="margin-left:1.5rem; line-height:1.8; margin-bottom:1.5rem;">
-            <li><strong>Mode plein écran obligatoire :</strong> Aucune application concurrente ne doit être active.</li>
-            <li><strong>Détection de sortie d'onglet (3 strikes) :</strong> Tout changement d'écran ou perte de focus de fenêtre est horodaté et comptabilisé. À la 3e violation, la session d'examen est <strong>automatiquement invalidée</strong>.</li>
-            <li><strong>Verrouillage du presse-papier :</strong> Les fonctions de copier, coller, couper, sélection de texte et raccourcis de développement (F12, Ctrl+U) sont désactivées.</li>
-            <li><strong>Chronomètre strict de 60 minutes :</strong> 40 questions aléatoires couvrant l'ensemble des 4 niveaux. Décompte en direct avec auto-soumission.</li>
+            <li><strong>Mode plein écran recommandé :</strong> Restez concentré sur l'épreuve.</li>
+            <li><strong>Détection de sortie d'onglet (3 avertissements) :</strong> Tout changement d'écran ou perte de focus de fenêtre est horodaté et comptabilisé. À la 3e violation, la session d'examen est <strong>automatiquement invalidée</strong>.</li>
+            <li><strong>Verrouillage du presse-papier :</strong> Les fonctions de copier, coller, couper et raccourcis de développement sont désactivées.</li>
+            <li><strong>Chronomètre strict de 60 minutes :</strong> 40 questions aléatoires couvrant l'ensemble des modules. Décompte en direct avec auto-soumission.</li>
             <li><strong>Seuil de réussite d'excellence :</strong> Minimum de <strong>80% (32/40)</strong> exigé pour l'admission.</li>
-            <li><strong>Identifiant cryptographique SHA-256 :</strong> Format officiel <code>YONAH-DM-2025-XXXXXX</code> avec QR code vectoriel vérifiable en ligne.</li>
+            <li><strong>Identifiant cryptographique SHA-256 :</strong> Format officiel <code>YONAH-DM-2025-XXXXXX</code> avec QR code vectoriel vérifiable localement.</li>
           </ol>
           <div id="contractActionBox" style="margin-top:2rem;"></div>
         `
