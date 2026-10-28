@@ -1,6 +1,6 @@
 {
-  "name": "Yonah — Délégué Médical Professionnel (Parcours Certifiant)",
-  "description": "Institut d'Excellence Yonah (Abidjan) : formation certifiante et interactive pour délégués médicaux en Côte d'Ivoire et Afrique de l'Ouest. Modules complets, cas pratiques réels, protocole d'examen surveillé et certificat vérifiable.",
+  "name": "Yonah — Délégué Médical : Du Débutant à l'Expert (30 Modules)",
+  "description": "Institut d'Excellence Yonah : Parcours certifiant complet de 30 modules en 4 niveaux (Débutant, Intermédiaire, Avancé, Expert). Pharmacologie, ATC, CIM-11, Interactions, Rawlins, Visite médicale, KOL, Leadership et Certification surveillée.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

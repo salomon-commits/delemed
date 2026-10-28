@@ -7,6 +7,9 @@ import {
   calculateXpAndLevel,
   evaluateViolations,
   formatDuration,
+  getAtcGroup,
+  calculateHalfLifeTimes,
+  getRawlinsDescription,
   type QuizQuestion,
 } from './courseLogic.ts';
 
@@ -44,18 +47,20 @@ test('shuffleArray randomly reorders without losing elements', () => {
   assert.deepEqual(new Set(shuffled), new Set(items));
 });
 
-test('calculateXpAndLevel computes levels properly', () => {
+test('calculateXpAndLevel computes levels properly across 4 tiers', () => {
   const l1 = calculateXpAndLevel(0, 0, false);
-  assert.equal(l1.level, 'Débutant');
+  assert.equal(l1.levelTier, 'DEBUTANT');
+  assert.match(l1.level, /Débutant/);
 
-  const l2 = calculateXpAndLevel(12, 1, false); // 600 + 150 = 750
-  assert.equal(l2.level, 'Intermédiaire');
+  const l2 = calculateXpAndLevel(15, 3, false); // 600 + 360 = 960
+  assert.equal(l2.levelTier, 'INTERMEDIAIRE');
 
-  const l3 = calculateXpAndLevel(25, 4, false); // 1250 + 600 = 1850
-  assert.equal(l3.level, 'Délégué Confirmé');
+  const l3 = calculateXpAndLevel(40, 6, false); // 1600 + 720 = 2320
+  assert.equal(l3.levelTier, 'AVANCE');
 
-  const l4 = calculateXpAndLevel(25, 4, true); // + 1000 = 2850
-  assert.equal(l4.level, 'Expert Terrain Yonah');
+  const l4 = calculateXpAndLevel(40, 6, true); // + 1500 = 3820
+  assert.equal(l4.levelTier, 'EXPERT');
+  assert.match(l4.level, /Expert/);
 });
 
 test('evaluateViolations triggers invalidation at 3 violations', () => {
@@ -84,3 +89,34 @@ test('formatDuration formats mm:ss', () => {
   assert.equal(formatDuration(1200), '20:00');
   assert.equal(formatDuration(45), '00:45');
 });
+
+test('getAtcGroup retrieves valid ATC groups', () => {
+  const atcC = getAtcGroup('C');
+  assert.ok(atcC);
+  assert.equal(atcC?.name, 'Système cardio-vasculaire');
+  assert.ok(atcC?.examples.includes('Amlodipine'));
+
+  const atcJ = getAtcGroup('j'); // case-insensitive
+  assert.ok(atcJ);
+  assert.equal(atcJ?.name, 'Anti-infectieux à usage systémique');
+
+  assert.equal(getAtcGroup('Z'), null);
+});
+
+test('calculateHalfLifeTimes estimates steady-state and elimination hours', () => {
+  const res = calculateHalfLifeTimes(12); // e.g. 12h half-life
+  assert.equal(res.steadyStateHours, 60); // 5 x 12
+  assert.equal(res.fullEliminationHours, 84); // 7 x 12
+
+  const zero = calculateHalfLifeTimes(0);
+  assert.equal(zero.steadyStateHours, 0);
+  assert.equal(zero.fullEliminationHours, 0);
+});
+
+test('getRawlinsDescription returns clinical descriptions', () => {
+  assert.match(getRawlinsDescription('A'), /Type A \(Augmented\)/);
+  assert.match(getRawlinsDescription('b'), /Type B \(Bizarre\)/);
+  assert.match(getRawlinsDescription('E'), /sevrage ou rebond/);
+  assert.equal(getRawlinsDescription('Unknown'), 'Type non classifié');
+});
+
