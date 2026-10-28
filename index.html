@@ -1392,7 +1392,7 @@
         <div class="topbar-actions">
           <button class="icon-btn btn-institution" onclick="app.showInstitutionalModal()" title="À propos de l'Institut YONAH & Fondateur">
             <span class="btn-inst-icon">🏛️</span>
-            <span class="btn-inst-label">YONAH</span>
+            <span class="btn-inst-label">À propos</span>
           </button>
           <button class="icon-btn btn-print-quick" onclick="window.print()" title="Imprimer la page / Télécharger en PDF (avec filigrane)">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -1809,32 +1809,14 @@
             </div>
           </div>
 
-          <!-- BANNIÈRE DE PROPRIÉTÉ PÉDAGOGIQUE -->
-          <div class="lesson-auth-pill btn-print-hide">
-            <span>« YONAH — Propriété pédagogique de Guede Camus SALOMON »</span>
-            <span class="auth-sep">•</span>
-            <span>Initiateur de l'idée de YONAH</span>
-            <span class="auth-sep">•</span>
-            <span>+225 0779638812</span>
-          </div>
-
           <h1 style="font-size:1.6rem; font-weight:900; color:var(--text-main); margin-bottom:1.25rem; line-height:1.25;">${sec.title}</h1>
           <div class="lesson-body-content" style="font-size:1.02rem; line-height:1.75; color:var(--text-main);">
             ${sec.html || ''}
           </div>
 
-          <!-- PIED DE PAGE D'IMPRESSION DU SUPPORT -->
+          <!-- PIED DE PAGE D'IMPRESSION DU SUPPORT (VISIBLE UNIQUEMENT À L'IMPRESSION) -->
           <div class="lesson-print-footer">
             « YONAH — Propriété pédagogique de Guede Camus SALOMON » • Contact : +225 0779638812 • Institut d'Excellence YONAH
-          </div>
-
-          <!-- PIED DE PAGE ÉCRAN DE LA LEÇON -->
-          <div class="lesson-screen-footer btn-print-hide">
-            <div class="lsf-copy">Support officiel de formation • YONAH — Propriété pédagogique de Guede Camus SALOMON (+225 0779638812)</div>
-            <button class="btn-nav-touch" onclick="window.print()" style="font-size:0.86rem; height:42px; margin:0.4rem auto 0; display:inline-flex;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-              <span>Imprimer cette leçon en PDF (avec filigrane)</span>
-            </button>
           </div>
         `;
 
@@ -1864,19 +1846,13 @@
             <h1 class="home-hero-title">
               Délégué Médical : Du Débutant à l'Expert
             </h1>
-            <div class="home-founder-tag">
-              Initiateur de l'idée de YONAH : <strong>Guede Camus SALOMON</strong> • Contact : <strong>+225 0779638812</strong>
-            </div>
             <p class="home-hero-desc">
-              Programme certifiant complet : <strong>30 modules fondamentaux</strong> et <strong>8 tracks de spécialisation</strong>. Pharmacologie fondamentale, physiologie, classification ATC, CIM-11, interactions médicamenteuses, visite médicale de terrain et protocole d'examen surveillé.
+              Programme certifiant d'excellence : <strong>30 modules fondamentaux</strong> et <strong>8 tracks de spécialisation</strong>. Pharmacologie fondamentale, physiopathologie, classification ATC, CIM-11, interactions médicamenteuses et visite médicale de terrain.
             </p>
-            <div class="home-pedagogical-notice">
-              « YONAH — Propriété pédagogique de Guede Camus SALOMON »
-            </div>
 
             <div class="home-name-box">
               <label class="home-name-label">
-                Nom & Prénom de l'apprenant (Certificat de reconnaissance YONAH) :
+                Nom & Prénom de l'apprenant (pour la certification) :
               </label>
               <input type="text" id="homeNameInput" value="${this.userName}" placeholder="ex : KOUASSI Yao Emmanuel" class="home-name-input" onchange="app.saveHomeName(this.value)">
             </div>
@@ -1886,7 +1862,7 @@
                 ${pct > 0 ? "Reprendre ma formation (" + pct + "%)" : "Commencer le Module 1"}
               </button>
               <button class="btn-nav-touch home-btn-sec" onclick="app.showInstitutionalModal()">
-                🏛️ L'Initiative YONAH
+                🏛️ À propos de l'Institut
               </button>
               <button class="btn-nav-touch home-btn-ter" onclick="app.goToSection('m30-integrity')">
                 🎓 Examen & Certificat
